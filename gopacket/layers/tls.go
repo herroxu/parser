@@ -180,7 +180,7 @@ func (t *TLS) decodeTLSRecords(data []byte, df gopacket.DecodeFeedback) error {
 		t.Handshake = append(t.Handshake, r)
 	case TLSApplicationData:
 		var r TLSAppDataRecord
-		e := r.decodeFromBytes(h, data[hl:tl], data, df)
+		e := r.decodeFromBytes(h, data[hl:tl], data[0:tl], df)
 		if e != nil {
 			return e
 		}

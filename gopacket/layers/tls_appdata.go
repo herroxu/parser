@@ -15,12 +15,12 @@ import (
 // TLSAppDataRecord contains all the information that each AppData Record types should have
 type TLSAppDataRecord struct {
 	TLSRecordHeader
-	Payload     []byte
-	FullPayload []byte
+	Payload         []byte
+	WithHeadPayload []byte
 }
 
 // DecodeFromBytes decodes the slice into the TLS struct.
-func (t *TLSAppDataRecord) decodeFromBytes(h TLSRecordHeader, data, full []byte, df gopacket.DecodeFeedback) error {
+func (t *TLSAppDataRecord) decodeFromBytes(h TLSRecordHeader, data, withHeadPayload []byte, df gopacket.DecodeFeedback) error {
 	// TLS Record Header
 	t.ContentType = h.ContentType
 	t.Version = h.Version
@@ -31,6 +31,6 @@ func (t *TLSAppDataRecord) decodeFromBytes(h TLSRecordHeader, data, full []byte,
 	}
 
 	t.Payload = data
-	t.FullPayload = full
+	t.WithHeadPayload = withHeadPayload
 	return nil
 }
